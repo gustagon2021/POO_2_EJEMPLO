@@ -1,0 +1,87 @@
+class Institucion:
+    def __init__(self, nombre):
+        self.__nombre = nombre
+        self.__asignaturas = []
+
+    def agregar_asignatura(self, asignatura):
+        self.__asignaturas.append(asignatura)
+
+    def obtener_nombre(self):
+        return self.__nombre
+
+    def obtener_asignaturas(self):
+        return self.__asignaturas
+
+
+class Asignatura(Institucion):
+    def __init__(self, nombre_asignatura, nombre_institucion):
+        super().__init__(nombre_institucion)
+        self.__nombre_asignatura = nombre_asignatura
+        self.__alumnos = []
+
+    def agregar_alumno(self, alumno):
+        self.__alumnos.append(alumno)
+
+    def obtener_nombre_asignatura(self):
+        return self.__nombre_asignatura
+
+    def obtener_alumnos(self):
+        return self.__alumnos
+
+
+class Alumno(Asignatura):
+    def __init__(self, nombre_alumno, nombre_asignatura, nombre_institucion):
+        super().__init__(nombre_asignatura, nombre_institucion)
+        self.__nombre_alumno = nombre_alumno
+        self.__notas = []
+
+    def agregar_nota(self, nota):
+        self.__notas.append(nota)
+
+    def obtener_nombre_alumno(self):
+        return self.__nombre_alumno
+
+    def obtener_notas(self):
+        return self.__notas
+
+    def promedio_notas(self):
+        if len(self.__notas) == 0:
+            return 0
+        return sum(self.__notas) / len(self.__notas)
+
+
+# Ejemplo de uso:
+if __name__ == "__main__":
+    # Crear instancia de Institucion
+    institucion = Institucion("Universidad X")
+
+    # Agregar asignaturas a la institucion
+    institucion.agregar_asignatura("Matemáticas")
+    institucion.agregar_asignatura("Física")
+    institucion.agregar_asignatura("Química")
+
+    # Crear instancia de Asignatura
+    asignatura = Asignatura("Matemáticas", "Universidad X")
+
+    # Crear instancia de Alumno y agregar notas
+    alumno1 = Alumno("Juan", "Matemáticas", "Universidad X")
+    alumno1.agregar_nota(85)
+    alumno1.agregar_nota(90)
+
+    alumno2 = Alumno("María", "Matemáticas", "Universidad X")
+    alumno2.agregar_nota(75)
+    alumno2.agregar_nota(80)
+
+    # Agregar alumnos a la asignatura
+    asignatura.agregar_alumno(alumno1)
+    asignatura.agregar_alumno(alumno2)
+
+    # Mostrar el promedio de notas de cada alumno
+    print("Promedio de notas de los alumnos:")
+    for alumno in asignatura.obtener_alumnos():
+        print(f"{alumno.obtener_nombre_alumno()}: {alumno.promedio_notas()}")
+
+    # Mostrar las asignaturas de la institucion
+    print("\nAsignaturas de la institución:")
+    for asignatura in institucion.obtener_asignaturas():
+        print(asignatura)
